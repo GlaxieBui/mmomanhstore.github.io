@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cửa Hàng Bán Tài Khoản MMO - Hiện Đại</title>
+<style>
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #eee;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    color: #63e6be;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover, a:focus {
+    color: #4ade80;
+  }
+
+  header {
+    background: rgba(12, 27, 40, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: #20c997;
+    user-select: none;
+    font-family: 'Orbitron', sans-serif;
+  }
+  nav {
+    display: flex;
+    gap: 24px;
+  }
+  nav a {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  nav a.active, nav a:hover {
+    background: #20c997;
+    color: #0a0a0a;
+    box-shadow: 0 0 8px #20c997;
+  }
+  button.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: #20c997;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  main {
+    flex: 1 0 auto;
+    max-width: 1200px;
+    width: 90%;
+    margin: 48px auto 80px auto;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 48px 24px;
+    background: rgba(32, 57, 68, 0.75);
+    border-radius: 20px;
+    box-shadow: 0 0 40px 2px #20c99780;
+    margin-bottom: 64px;
+  }
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, #63e6be, #20c997);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 1.2rem;
+    color: #a0f0d1;
+    max-width: 650px;
+    margin: 0 auto 32px auto;
+  }
+  .btn-primary {
+    display: inline-block;
+    padding: 16px 48px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 12px;
+    background-image: linear-gradient(135deg, #20c997, #63e6be);
+    color: #032117;
+    cursor: pointer;
+    box-shadow: 0 6px 12px #63e6beaa;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px #20c997cc;
+    outline: none;
+  }
+
+  section.featured-accounts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+  }
+
+  .account-card {
+    background: rgba(12, 27, 40, 0.85);
+    border: 1px solid #20c997;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px #1ca78d88;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .account-card:hover,
+  .account-card:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 36px #20c997cc;
+  }
+  .account-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    background: linear-gradient(135deg, #20c997 0%, #63e6be 100%);
+  }
+
+  .account-content {
+    padding: 20px 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .account-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    color: #a0f0d1;
+    font-weight: 700;
+    margin-bottom: 8px;
+    user-select: none;
+  }
+  .account-meta {
+    font-size: 0.925rem;
+    color: #63e6becc;
+    margin-bottom: 16px;
+  }
+  .account-description {
+    font-size: 0.95rem;
+    color: #88d8c0;
+    flex-grow: 1;
+    margin-bottom: 16px;
+  }
+
+  .btn-buy {
+    background: #20c997;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    color: #032117;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+    user-select: none;
+  }
+  .btn-buy:hover, .btn-buy:focus {
+    background: #16ab79;
+    outline: none;
+  }
+
+  footer {
+    background: rgba(12, 27, 40, 0.95);
+    color: #63e6be;
+    text-align: center;
+    padding: 24px;
+    font-size: 0.9rem;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    header {
+      padding: 12px 16px;
+    }
+    nav {
+      display: none;
+    }
+    button.hamburger {
+      display: block;
+    }
+    main {
+      margin: 32px auto 64px auto;
+      width: 95%;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+    .btn-primary {
+      padding: 14px 32px;
+      font-size: 1rem;
+    }
+    section.featured-accounts {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter&family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+<header>
+  <div class="logo" tabindex="0" aria-label="Cửa hàng bán tài khoản MMO">MMOStore</div>
+  <nav aria-label="Chính sách điều hướng chính">
+    <a href="#" class="active" tabindex="0">Trang chủ</a>
+    <a href="#" tabindex="0">Tài khoản</a>
+    <a id="support-link" tabindex="0">Hỗ trợ</a>
+    <a id="contact-link" tabindex="0">Liên hệ</a>
+  </nav>
+  <button class="hamburger" aria-label="Mở menu điều hướng di động" aria-expanded="false" aria-controls="mobile-menu">&#9776;</button>
+</header>
+
+<main>
+  <section class="hero" role="region" aria-label="Phần giới thiệu chính">
+    <h1>Manh Store</h1>
+    <p>Mua bán tài khoản trực tuyến an toàn, nhanh chóng và uy tín. Tìm tài khoản phù hợp với bạn ngay hôm nay!</p>
+    <button class="btn-primary" aria-label="Nút Mua Ngay">Mua Ngay</button>
+  </section>
+
+  <section class="featured-accounts" role="region" aria-label="Tài khoản nổi bật">
+    <article class="account-card" tabindex="0" aria-labelledby="account1-title">
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c0899460-216b-4ea2-989d-b3cdbad10757.png" alt="Ảnh đại diện tài khoản game thần thoại với trang phục hiếm" class="account-image" />
+      <div class="account-content">
+        <h2 id="account1-title" class="account-title">Tài khoản Chat GPT Plus 1 Tháng</h2>
+        <p class="account-meta">Trả lời câu hỏi nhanh và tối ưu hơn,không giới hạn số câu hỏi / ngày</p>
+        <p class="account-description">100.000vnd.</p>
+        <button class="btn-buy" aria-label="Mua tài khoản Thần Thoại VIP">Mua Ngay</button>
+      </div>
+    </article>
+    <article class="account-card" tabindex="0" aria-labelledby="account1-title">
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c0899460-216b-4ea2-989d-b3cdbad10757.png" alt="Ảnh đại diện tài khoản game thần thoại với trang phục hiếm" class="account-image" />
+      <div class="account-content">
+        <h2 id="account1-title" class="account-title">Tài khoản Chat GPT Plus 3 Tháng</h2>
+        <p class="account-meta">Trả lời câu hỏi nhanh và tối ưu hơn,không giới hạn số câu hỏi / ngày</p>
+        <p class="account-description">250.000vnd.</p>
+        <button class="btn-buy" aria-label="Mua tài khoản Thần Thoại VIP">Mua Ngay</button>
+      </div>
+    </article><article class="account-card" tabindex="0" aria-labelledby="account1-title">
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c0899460-216b-4ea2-989d-b3cdbad10757.png" alt="Ảnh đại diện tài khoản game thần thoại với trang phục hiếm" class="account-image" />
+      <div class="account-content">
+        <h2 id="account1-title" class="account-title">Tài khoản Chat GPT Plus 1 Năm</h2>
+        <p class="account-meta">Trả lời câu hỏi nhanh và tối ưu hơn,không giới hạn số câu hỏi / ngày</p>
+        <p class="account-description">499.000vnd.</p>
+        <button class="btn-buy" aria-label="Mua tài khoản Thần Thoại VIP">Mua Ngay</button>
+      </div>
+    </article>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  &copy; 2025 ManhStore - Bán tài khoản trực tuyến an toàn và uy tín
+</footer>
+
+<script>
+  // Mobile menu toggle for future use - navigation currently static
+  const hamburger = document.querySelector('button.hamburger');
+  const nav = document.querySelector('nav');
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+    if (nav.style.display === 'flex') {
+      nav.style.display = 'none';
+    } else {
+      nav.style.display = 'flex';
+      nav.style.flexDirection = 'column';
+      nav.style.position = 'absolute';
+      nav.style.top = '60px';
+      nav.style.right = '12px';
+      nav.style.background = 'rgba(12, 27, 40, 0.95)';
+      nav.style.borderRadius = '12px';
+      nav.style.boxShadow = '0 8px 20px #20c997dd';
+      nav.style.padding = '12px 24px';
+      nav.style.zIndex = '120';
+    }
+  });
+
+  // Chuyển hướng khi bấm nút mua
+  const buttonsBuy = document.querySelectorAll('.btn-buy');
+  buttonsBuy.forEach(btn => {
+    btn.addEventListener('click', () => {
+      window.location.href = 'https://forms.gle/PsMjaHFcQF1yasKr8';
+    });
+  });
+
+  // Nút "Mua Ngay" hero cũng chuyển hướng
+  const heroBuyBtn = document.querySelector('.btn-primary');
+  if (heroBuyBtn) {
+    heroBuyBtn.addEventListener('click', () => {
+      window.location.href = 'https://forms.gle/PsMjaHFcQF1yasKr8';
+    });
+  }
+
+  // Chuyển hướng khi nhấn Hỗ trợ hoặc Liên hệ tới Facebook
+  const supportLink = document.getElementById('support-link');
+  const contactLink = document.getElementById('contact-link');
+  const fbLink = 'https://www.facebook.com/manhlords';
+
+  if (supportLink) {
+    supportLink.addEventListener('click', () => {
+      window.location.href = fbLink;
+    });
+  }
+
+  if (contactLink) {
+    contactLink.addEventListener('click', () => {
+      window.location.href = fbLink;
+    });
+  }
+</script>
+</body>
+</html>
+
